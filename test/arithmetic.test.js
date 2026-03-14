@@ -257,4 +257,56 @@ describe('Arithmetic', function () {
                 });
         });
     });
+
+    // add tests for power (or exponential) function
+     describe('Power', function () {
+        it('raises a positive integer to a positive integer power', function (done) {
+            request.get('/arithmetic?operation=^&operand1=2&operand2=3')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 8 });
+                    done();
+                });
+        });
+        it('raises a positive integer to the zero power', function (done) {
+            request.get('/arithmetic?operation=^&operand1=2&operand2=0')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 1 });
+                    done();
+                });
+        });
+        it('raises a positive integer to a negative integer power', function (done) {
+            request.get('/arithmetic?operation=^&operand1=2&operand2=-3')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 0.125 });
+                    done();
+                });
+        });
+        it('raises a negative integer to a positive integer power', function (done) {
+            request.get('/arithmetic?operation=^&operand1=-2&operand2=3')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: -8 });
+                    done();
+                });
+        });
+        it('raises a negative integer to an even positive integer power', function (done) {
+            request.get('/arithmetic?operation=^&operand1=-2&operand2=4')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 16 });
+                    done();
+                });
+        });
+        it('raises zero to a positive integer power', function (done) {
+            request.get('/arithmetic?operation=^&operand1=0&operand2=3')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 0 });
+                    done();
+                });
+        });
+    });
 });
