@@ -309,4 +309,47 @@ describe('Arithmetic', function () {
                 });
         });
     });
+
+    describe('Modulo', function () {
+        it('computes modulo of two positive integers', function (done) {
+            request.get('/arithmetic?operation=modulo&operand1=17&operand2=5')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 2 });
+                    done();
+                });
+        });
+        it('computes modulo with zero remainder', function (done) {
+            request.get('/arithmetic?operation=modulo&operand1=10&operand2=5')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 0 });
+                    done();
+                });
+        });
+        it('computes modulo with negative dividend', function (done) {
+            request.get('/arithmetic?operation=modulo&operand1=-17&operand2=5')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: -2 });
+                    done();
+                });
+        });
+        it('computes modulo with negative divisor', function (done) {
+            request.get('/arithmetic?operation=modulo&operand1=17&operand2=-5')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 2 });
+                    done();
+                });
+        });
+        it('computes modulo of floating point numbers', function (done) {
+            request.get('/arithmetic?operation=modulo&operand1=7.5&operand2=2')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 1.5 });
+                    done();
+                });
+        });
+    });
 });
