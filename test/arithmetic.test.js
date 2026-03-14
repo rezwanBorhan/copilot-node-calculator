@@ -94,7 +94,59 @@ describe('Arithmetic', function () {
     });
 
 // TODO: Challenge #1
- 
+// add tests for subtraction, multiplication, and division
+
+     describe('Subtraction', function () {
+        it('subtracts two positive integers', function (done) {
+            request.get('/arithmetic?operation=subtract&operand1=21&operand2=2')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 19 });
+                    done();
+                });
+        });
+        it('subtracts a positive integer with zero', function (done) {
+            request.get('/arithmetic?operation=subtract&operand1=21&operand2=0')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 21 });
+                    done();
+                });
+        });
+        it('subtracts a positive integer and negative integer', function (done) {
+            request.get('/arithmetic?operation=subtract&operand1=21&operand2=-2')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 23 });
+                    done();
+                });
+        });
+        it('subtracts two negative integers', function (done) {
+            request.get('/arithmetic?operation=subtract&operand1=-21&operand2=-2')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: -19 });
+                    done();
+                });
+        });
+        it('subtracts two floating point numbers', function (done) {
+            request.get('/arithmetic?operation=subtract&operand1=.5&operand2=0.5')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 0 });
+                    done();
+                });
+        });
+        it('subtracts supporting exponential notation', function (done) {
+            request.get('/arithmetic?operation=subtract&operand1=4.2e1&operand2=1e0')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 41 });
+                    done();
+                });
+        });
+    });
+     
 
     describe('Multiplication', function () {
         it('multiplies two positive integers', function (done) {
